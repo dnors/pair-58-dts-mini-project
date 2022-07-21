@@ -1,57 +1,114 @@
-import './App.css';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-
-import {ThemeProvider } from '@mui/material';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Home from './containers/Home';
-import theme from './themes/theme';
-import React, { useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-
 import "./App.css";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 
+import { Box, ThemeProvider } from "@mui/material";
+import { Route, Routes } from "react-router-dom";
 
-// import required modules
-import { Pagination, Navigation } from "swiper";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Home from "./containers/Home";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Register from "./containers/Register";
+import Subscribed from "./containers/Subscribed";
+import DetailMovie from "./containers/DetailMovie";
+import Pricing from "./containers/Pricing";
+import Login from "./containers/Login";
+import About from "./containers/About";
+import theme from "./themes/theme";
+import NotFound from "./containers/NotFound";
+import React, { useRef, useState } from "react";
 
-function App() {
+const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <>
-          <Swiper
-            slidesPerView={3}
-            spaceBetween={30}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Pagination, Navigation]}
-            className="mySwiper"
-          >
-            <SwiperSlide>Slide 1</SwiperSlide>
-            <SwiperSlide>Slide 2</SwiperSlide>
-            <SwiperSlide>Slide 3</SwiperSlide>
-            <SwiperSlide>Slide 4</SwiperSlide>
-            <SwiperSlide>Slide 5</SwiperSlide>
-            <SwiperSlide>Slide 6</SwiperSlide>
-            <SwiperSlide>Slide 7</SwiperSlide>
-            <SwiperSlide>Slide 8</SwiperSlide>
-            <SwiperSlide>Slide 9</SwiperSlide>
-          </Swiper>
-        </>
-        <Navbar />
-        <Home />
-        <Footer />
+        <Navbar></Navbar>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Navbar />
+                <Home />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="pricing"
+            element={
+              <>
+                <Navbar />
+                <Pricing />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="about"
+            element={
+              <>
+                <Navbar />
+                <About />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <>
+                <Navbar />
+                <NotFound />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="login"
+            element={
+              <ProtectedRoute loginOnly={false}>
+                <Login />
+                <Footer />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="register"
+            element={
+              <ProtectedRoute loginOnly={false}>
+                <Register />
+                <Footer />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/movie/:id"
+            element={
+              <ProtectedRoute>
+                <Navbar />
+                <DetailMovie />
+                <Footer />
+              </ProtectedRoute>
+            }
+          />
+                    <Route
+            path="/subscribed/:plan"
+            element={
+              <ProtectedRoute>
+                <Navbar />
+                <Subscribed />
+                <Footer />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
       </div>
     </ThemeProvider>
   );
-}
+};
 
 export default App;

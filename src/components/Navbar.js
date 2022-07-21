@@ -10,6 +10,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Link, NavLink } from 'react-router-dom';
 import MenuLogout from './MenuLogout';
 
+const navItems = [
+  { text: 'Home', link: '/' },
+  { text: 'Pricing', link: '/pricing' },
+  { text: 'About', link: '/about' }
+];
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -50,13 +56,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-
-const navItems = [
-  { text: 'Home', link: '/' },
-  { text: 'Pricing', link: '/pricing' },
-  { text: 'Movies', link: '/about' },
-  { text: 'My List', link: '/about' }
-];
 
 const Navbar = () => {
   return (
